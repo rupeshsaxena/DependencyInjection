@@ -29,7 +29,7 @@ jobs:
       - name: Create Release Archive
         run: |
           mkdir Release
-          cp -r "build/Release-iphoneos/DependencyInjection.xcframework" Release/DependencyInjection.xcframework
+          cp -r "Build/Release-iphoneos/DependencyInjection.xcframework" Release/DependencyInjection.xcframework
           zip -r DependencyInjection.zip Release
 
       - name: Upload Release Archive
