@@ -27,6 +27,7 @@ jobs:
       - name: Create Release Archive
         run: |
           mkdir Release
+          ls Build/Products/Release-iphoneos/
           cp -r "Build/Products/Release-iphoneos/DependencyInjection.o" Release/DependencyInjection.o
           zip -r DependencyInjection.xcframework Release
 
@@ -47,8 +48,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Get current tag
         id: get_tag
