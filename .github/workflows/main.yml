@@ -30,10 +30,11 @@ jobs:
 
       - name: Create Release XCFramework
         run: |
-          cd "./Build"
+          cd Build/Release-iphoneos
           xcodebuild -create-xcframework -library Release-iphoneos/libDependencyInjection.a -allow-internal-distribution -output DependencyInjection.xcframework
+          cd ..
           mkdir Release
-          cp -r "./Build/DependencyInjection.xcframework" Release/DependencyInjection.xcframework
+          cp -r ./Build/DependencyInjection.xcframework Release/DependencyInjection.xcframework
           zip -r DependencyInjection.xcframework Release
 
       - name: Upload Release Archive
