@@ -31,9 +31,9 @@ jobs:
       - name: Create Release XCFramework
         run: |
           mkdir Release
-          cd Build/Release-iphoneos
+          cd Build
           xcodebuild -create-xcframework -library Release-iphoneos/libDependencyInjection.a -allow-internal-distribution -output DependencyInjection.xcframework
-          cp -r ./Build/DependencyInjection.xcframework Release/DependencyInjection.xcframework
+          cp -r ./Build/Release-iphoneos/DependencyInjection.xcframework Release/DependencyInjection.xcframework
           zip -r DependencyInjection.xcframework Release
 
       - name: Upload Release Archive
@@ -42,7 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./DependencyInjection.zip
+          asset_path: ./Build/Release/DependencyInjection.zip
           asset_name: DependencyInjection.zip
           asset_content_type: application/zip
 
