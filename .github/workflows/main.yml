@@ -33,7 +33,7 @@ jobs:
           mkdir Release
           cd Build
           xcodebuild -create-xcframework -library Release-iphoneos/libDependencyInjection.a -allow-internal-distribution -output DependencyInjection.xcframework
-          cp -r Build/Release-iphoneos/DependencyInjection.xcframework Release/DependencyInjection.xcframework
+          cp -r /Users/runner/work/DependencyInjection/DependencyInjection/Build/DependencyInjection.xcframework /Users/runner/work/DependencyInjection/DependencyInjection/Release/DependencyInjection.xcframework
           zip -r DependencyInjection.xcframework Release
 
       - name: Upload Release Archive
