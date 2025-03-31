@@ -27,7 +27,8 @@ jobs:
         run: |
           cd ./Build/Release-iphoneos
           ar -crs libDependencyInjection.a DependencyInjection.o
-
+      - name: Debug Event Context
+        run: echo "${{ toJSON(github.event) }}"
       - name: Create Release XCFramework
         run: |
           mkdir Release
