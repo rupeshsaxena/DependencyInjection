@@ -1,5 +1,4 @@
 # Dependency Injection Framework
-==============================
 
 A lightweight, modular and scalable dependency injection framework for Swift.
 
