@@ -7,17 +7,17 @@
 
 import Foundation
 
-public class DependencyInjector {
+internal class DependencyInjector {
     private var providers: [String: any ServiceProvider] = [:]
 
-    public func register<T>(_ service: T) where T: ServiceProvider {
+    func register<T>(_ service: T) where T: ServiceProvider {
         let key = String(describing: T.self)
         dump(key)
         providers[key] = service
         dump(providers)
     }
 
-    public func resolve<T>() throws -> T? where T: ServiceProvider {
+    func resolve<T>() throws -> T? where T: ServiceProvider {
         let key = String(describing: T.self)
         dump(key)
         guard let serviceProvider = providers[key] else {
