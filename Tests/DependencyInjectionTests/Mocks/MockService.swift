@@ -8,14 +8,22 @@
 import DependencyInjection
 import Foundation
 
-public class MockService: Service {
-    public typealias OutputType = String
+public protocol DataService {
+    func fetchData() -> String
+}
 
-    public static var outputKind: String {
-        "MockService"
+public protocol UserService {
+    func getUsername() -> String
+}
+
+public class MockDataService: DataService {
+    public func fetchData() -> String {
+        "Mocked Data"
     }
+}
 
-    public static var output: String {
-        outputKind
+public class MockUserService: UserService {
+    public func getUsername() -> String {
+        "Mock user name"
     }
 }
