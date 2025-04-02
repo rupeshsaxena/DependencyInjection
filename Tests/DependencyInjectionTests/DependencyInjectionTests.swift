@@ -3,45 +3,49 @@ import Foundation
 @testable import DependencyInjection
 
 final class DependencyInjectionTests {
-    private var dependencyContainer: DependencyContainer!
-    private var mockServiceProvider: MockServiceProvider!
-    private var mockService: MockService!
+    private var container: DependencyContainer!
+    private var mockDataService: MockDataService!
+    private var mockUserService: MockUserService!
 
-    init() throws {
-        dependencyContainer = DependencyContainer()
-        mockServiceProvider = MockServiceProvider()
-        mockService = MockService()
+    init() {
+        container = DependencyContainer()
+        mockDataService = MockDataService()
+        mockUserService = MockUserService()
     }
 
     deinit {
-        dependencyContainer = nil
-        mockServiceProvider = nil
-        mockService = nil
+        container = nil
+        mockDataService = nil
+        mockUserService = nil
     }
 
     @Test
-    func containerRegisterServiceProvider() throws { dependencyContainer.registerService(mockServiceProvider)
+    func testDependencyRegistrationAndResolution() {
 
-        let expectedRegistry: MockServiceProvider! = try dependencyContainer.resolveService()
+        container.register(mockDataService as DataService)
+        container.register(mockUserService as UserService)
 
-        #expect(expectedRegistry != nil)
-    }
+        let resolvedDataService: DataService? = container.resolve()
+        var resolvedUserService: UserService
+        do {
+            resolvedUserService = try container.resolveOrFatal()
+            #expect(resolvedUserService is MockUserService)
+            #expect(resolvedUserService.getUsername() == "Mock user name")
+        } catch let error as NSError {
+            #expect(error.code == -102)
+        }
 
-    @Test
-    func containerRegisterServiceProviderAndThenResolveTheServiceProvider() throws {
-        dependencyContainer.registerService(mockServiceProvider)
-        let expectedProvider: MockServiceProvider! = try dependencyContainer.resolveService()
-        let mockService = mockServiceProvider.resolve()
-        let expectedMockService = expectedProvider.resolve()
+        #expect(resolvedDataService != nil)
+        #expect(resolvedDataService is MockDataService)
 
-        #expect(mockServiceProvider == expectedProvider)
-        #expect(mockService == expectedMockService)
+        #expect(resolvedDataService!.fetchData() == "Mocked Data")
+
     }
 
     @Test
     func containerResolvesServiceProviderWithoutRegistration() throws {
         do {
-            let _: MockServiceProvider! = try dependencyContainer.resolveService()
+            let _: MockUserService! = try container.resolveOrFatal()
         } catch let error as NSError {
             #expect(error.code == -102)
         }
