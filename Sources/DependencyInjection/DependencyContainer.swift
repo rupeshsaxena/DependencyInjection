@@ -10,7 +10,10 @@ import Foundation
 import Observation
 
 @Observable
-public final class DependencyContainer: DependencyResolver, DependencyRegistrar {
+public final class DependencyContainer {
+
+    public init() { }
+
     public func resolve<T>() -> T? {
         dependencies[ObjectIdentifier(T.self)] as? T
     }
