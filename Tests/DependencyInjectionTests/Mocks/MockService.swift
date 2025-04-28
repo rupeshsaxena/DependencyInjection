@@ -18,12 +18,12 @@ public protocol UserService {
 
 public class MockDataService: DataService {
     public func fetchData() -> String {
-        "Mocked Data"
+        "bar"
     }
 }
 
 public class MockUserService: UserService {
     public func getUsername() -> String {
-        "Mock user name"
+        "foo"
     }
 }

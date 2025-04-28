@@ -22,30 +22,23 @@ final class DependencyInjectionTests {
     @Test
     func testDependencyRegistrationAndResolution() {
 
-        container.register(mockDataService as DataService)
-        container.register(mockUserService as UserService)
+        container.register(mockDataService as DataService, .singleton)
+        container.register(mockUserService as UserService, .transient)
 
         let resolvedDataService: DataService? = container.resolve()
-        var resolvedUserService: UserService
-        do {
-            resolvedUserService = try container.resolveOrFatal()
-            #expect(resolvedUserService is MockUserService)
-            #expect(resolvedUserService.getUsername() == "Mock user name")
-        } catch {}
+        let resolvedUserService: UserService? = container.resolveOrFatal()
 
+        #expect(resolvedUserService is MockUserService)
+        #expect(resolvedUserService?.getUsername() == "foo")
         #expect(resolvedDataService != nil)
         #expect(resolvedDataService is MockDataService)
 
-        #expect(resolvedDataService!.fetchData() == "Mocked Data")
-
+        #expect(resolvedDataService!.fetchData() == "bar")
     }
 
     @Test
-    func containerResolvesServiceProviderWithoutRegistration() throws {
-        do {
-            let _: MockUserService! = try container.resolveOrFatal()
-        } catch let error as NSError {
-            #expect(error.code == -102)
-        }
+    func containerResolvesServiceProviderWithoutRegistration() {
+        let mockService: MockUserService? = container.resolveOrFatal()
+        #expect(mockService == nil)
     }
 }
